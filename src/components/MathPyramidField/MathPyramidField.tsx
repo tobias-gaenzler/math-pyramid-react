@@ -1,35 +1,31 @@
 import React, { useState } from "react";
 import "./MathPyramidField.css";
 import TextField from "@mui/material/TextField";
+import { Model } from "../../common/Model";
 
 export interface MathPyramidInputFieldHandler {
-  (inputValue: string, solutionValue: number): boolean;
+  (index: number, inputValue: string, model: Model): boolean;
 }
+
 type Props = {
-  startValue?: undefined | number;
-  solutionValue: number;
   index: number;
+  value: unknown;
+  model: Model;
   inputHandler: MathPyramidInputFieldHandler;
-  userInput: (undefined | number)[];
-  setUserInput: React.Dispatch<React.SetStateAction<(number | undefined)[]>>;
 };
 
 const MathPyramidField: React.FC<Props> = ({
-  startValue,
-  solutionValue,
   index,
+  value,
+  model,
   inputHandler,
-  userInput,
-  setUserInput,
 }: Props) => {
+  const startValue = model.startValues[index];
   const [disabled, setDisabled] = useState<boolean>(
     startValue === undefined ? false : true
   );
   const [className, setClassName] = useState<string>(
     `pyramid-field ${disabled ? "disabled" : ""}`
-  );
-  const [value, setValue] = useState<string>(
-    startValue === undefined ? "" : startValue.toString()
   );
 
   return (
@@ -48,10 +44,7 @@ const MathPyramidField: React.FC<Props> = ({
           setClassName("pyramid-field");
           return;
         }
-        setValue(currentInputValue);
-        userInput[index] = parseInt(currentInputValue);
-        setUserInput(Object.assign([], userInput));
-        const inputCorrect = inputHandler(currentInputValue, solutionValue);
+        const inputCorrect = inputHandler(index, currentInputValue, model);
         if (inputCorrect) {
           setDisabled(true);
           setClassName("pyramid-field correct");

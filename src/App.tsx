@@ -1,14 +1,26 @@
-import React from "react";
 import "./App.css";
-import MathPyramid from "./components/MathPyramid/MathPyramid";
 import Header from "./components/Header/Header";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NotFoundView from "./views/NotFoundView";
+import HelpView from "./views/HelpView";
+import PracticeView from "./views/PracticeView";
 
 function App() {
   return (
-    <React.Fragment>
+    <BrowserRouter>
       <Header />
-      <MathPyramid size={3} maxValue={100} />
-    </React.Fragment>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<HelpView />} />
+      <Route path="/practice" element={<PracticeView />} />
+      <Route path="*" element={<NotFoundView />} />
+    </Routes>
   );
 }
 

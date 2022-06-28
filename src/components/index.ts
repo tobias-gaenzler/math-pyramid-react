@@ -1,5 +1,5 @@
-import MathPyramidField from "./MathPyramidField/MathPyramidField";
-import MathPyramid from "./MathPyramid/MathPyramid";
 import Header from "./Header/Header";
+import MathPyramid from "./MathPyramid/MathPyramid";
+import MathPyramidField from "./MathPyramidField/MathPyramidField";
 
 export { MathPyramidField, MathPyramid, Header };

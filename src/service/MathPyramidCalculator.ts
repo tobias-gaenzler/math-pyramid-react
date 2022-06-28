@@ -29,6 +29,7 @@ class MathPyramidCalculator {
     solution: number[],
     size: number
   ): (number | undefined)[] {
+    const numberOfFields = this.getNumberOfFields(size);
     let randomStartIndices = _.sortBy(_.sample([0, 1, 2, 3, 4, 5], size));
     while (
       // exclude not uniquely solvable start values
@@ -37,10 +38,10 @@ class MathPyramidCalculator {
       _.isEqual(randomStartIndices, [3, 4, 5]) ||
       _.isEqual(randomStartIndices, [0, 2, 5])
     ) {
-      randomStartIndices = _.sortBy(_.sample([0, 1, 2, 3, 4, 5], size));
+      randomStartIndices = _.sortBy(_.sample(_.range(numberOfFields), size));
     }
 
-    const startValues = new Array(6);
+    const startValues = new Array(numberOfFields);
     _.each(
       randomStartIndices,
       (index: number) => (startValues[index] = solution[index])
@@ -55,6 +56,10 @@ class MathPyramidCalculator {
       index = index + size - i;
     }
     return index + colId;
+  }
+
+  private getNumberOfFields(size: number) {
+    return (size * size + size) / 2;
   }
 }
 
