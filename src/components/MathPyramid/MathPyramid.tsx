@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./MathPyramid.css";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import * as _ from "underscore";
+import _ from "underscore";
+import { Model } from "../../common/Model";
 import MathPyramidField, {
   MathPyramidInputFieldHandler,
 } from "../MathPyramidField/MathPyramidField";
-import { Model } from "../../common/Model";
 
 type Props = {
   size: number;
@@ -73,15 +73,15 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
     }
     return fields;
   }
-
-  // avoid changing from uncontrolled to controlled fields when
-  // starting new game by using random key for fields
-  function createRandomKey(index: number) {
-    return "field_"
-      .concat(index.toString())
-      .concat("_")
-      .concat(Math.random().toString());
-  }
 };
+
+// avoid changing from uncontrolled to controlled fields when
+// starting new game by using random key for fields
+function createRandomKey(index: number) {
+  return "field_"
+    .concat(index.toString())
+    .concat("_")
+    .concat(Math.random().toString());
+}
 
 export default MathPyramid;
