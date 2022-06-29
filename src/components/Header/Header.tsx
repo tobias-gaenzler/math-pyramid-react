@@ -34,6 +34,14 @@ const Header: React.FC<Props> = () => (
             sx={{ mr: 2 }}
             color="inherit"
             component={RouterLink}
+            to="/play"
+          >
+            Play
+          </Button>
+          <Button
+            sx={{ mr: 2 }}
+            color="inherit"
+            component={RouterLink}
             to="/practice"
           >
             Practice

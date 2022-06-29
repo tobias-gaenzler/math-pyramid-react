@@ -1,9 +1,7 @@
 import "./App.css";
 import Header from "./components/Header/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NotFoundView from "./views/NotFoundView";
-import HelpView from "./views/HelpView";
-import PracticeView from "./views/PracticeView";
+import { HelpView, PracticeView, PlayView, NotFoundView } from "./views";
 
 function App() {
   return (
@@ -19,6 +17,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<HelpView />} />
       <Route path="/practice" element={<PracticeView />} />
+      <Route path="/play" element={<PlayView />} />
       <Route path="*" element={<NotFoundView />} />
     </Routes>
   );
