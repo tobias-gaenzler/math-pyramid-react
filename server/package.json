@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "math-pyramid-server",
+  "description": "A react application to train mathematical skills by solving math pyramids.",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "dotenv": "^16.0.1",
+    "typescript": "^4.7.4",
+    "uuid": "^8.3.2",
+    "ws": "^8.8.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
+  }
+}
