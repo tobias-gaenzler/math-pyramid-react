@@ -7,6 +7,15 @@ import { Model } from "../../common/Model";
 import MathPyramidField, {
   MathPyramidInputFieldHandler,
 } from "../MathPyramidField/MathPyramidField";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
+import { MathPyramidCalculator } from "../../service/MathPyramidCalculator";
 
 type Props = {
   size: number;
@@ -14,7 +23,11 @@ type Props = {
 };
 
 const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
-  const [model, setModel] = useState<Model>(new Model(size, maxValue));
+  const calculator = new MathPyramidCalculator();
+  const [model, setModel] = useState<Model>(
+    new Model(size, maxValue, calculator)
+  );
+  const [solved, setSolved] = useState<boolean>(false);
 
   const inputHandler: MathPyramidInputFieldHandler = (
     index: number,
@@ -25,12 +38,16 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
     if (inputCorrect) {
       model.userInput[index] = parseInt(inputValue);
       if (_.isEqual(model.solution, model.userInput)) {
-        setModel(new Model(size, maxValue));
+        setSolved(true);
       }
     }
     return inputCorrect;
   };
 
+  const restart = () => {
+    setSolved(false);
+    setModel(new Model(size, maxValue, calculator));
+  };
   const rows: React.ReactElement[] = getRows();
 
   return (
@@ -41,6 +58,19 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
       className="math-pyramid"
     >
       {rows}
+      <Dialog open={solved} onClose={restart}>
+        <DialogContent>
+          <Alert variant="filled" severity="success">
+            <AlertTitle>Solved!</AlertTitle>
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={restart}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Button color="primary" variant="contained" onClick={restart}>
+        Restart
+      </Button>
     </Stack>
   );
 
@@ -60,7 +90,7 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
   function getFieldsForRow(row: number) {
     const fields: React.ReactElement[] = [];
     for (let column = 0; column < model.size - row; column++) {
-      const index = model.calculator.getIndex(row, column, model.size);
+      const index = calculator.getIndex(row, column, model.size);
       fields.push(
         <MathPyramidField
           key={createRandomKey(index)}
