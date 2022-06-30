@@ -10,7 +10,7 @@ type ChildrenProps = {
 };
 const UserContext = createContext<UserContextProps>({
   userName: "",
-  saveUserName: (newUserName: string) => {},
+  saveUserName: () => {},
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -31,6 +31,7 @@ function UserContextProvider(props: ChildrenProps) {
   const [userName, setUserName] = useState<string>(initialUserName);
 
   const saveUserName = (newUserName: string) => {
+    console.log("Saving new user name: ".concat(userName));
     localStorage.setItem("userName", newUserName);
     setUserName(newUserName);
   };
