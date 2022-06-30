@@ -1,6 +1,7 @@
 import { Box, Button, Stack } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { Model } from "../common/Model";
+import { useUserContext } from "../common/UserContext";
 import { MathPyramidCalculator } from "../service/MathPyramidCalculator";
 
 type Props = {};
@@ -20,8 +21,8 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 const PlayView: React.FC<Props> = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userName] = useState<string>("Tobias");
   const calculator = new MathPyramidCalculator();
+  const { userName } = useUserContext();
 
   const ws = useRef<WebSocket>();
 
@@ -66,7 +67,6 @@ const PlayView: React.FC<Props> = () => {
   }, []);
   return (
     <Stack display="flex" justifyContent="center" alignItems="center">
-      <Box>You are playing as {userName}</Box>
       {messages.map((message, index) => (
         <Box key={index}>{message.body}</Box>
       ))}

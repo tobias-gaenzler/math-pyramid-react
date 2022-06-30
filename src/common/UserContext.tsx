@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import userNames from "./userNames.json";
 
 type UserContextProps = {
@@ -8,16 +8,30 @@ type UserContextProps = {
 type ChildrenProps = {
   children: React.ReactNode;
 };
-const UserContext = createContext<Partial<UserContextProps>>({});
+const UserContext = createContext<UserContextProps>({
+  userName: "",
+  saveUserName: (newUserName: string) => {},
+});
 const useUserContext = () => useContext(UserContext);
 
 function UserContextProvider(props: ChildrenProps) {
-  const initialUserName =
-    userNames[Math.floor(Math.random() * userNames.length)];
-  console.log("Setting initial user name: ".concat(initialUserName));
+  let initialUserName: string;
+
+  if (localStorage.getItem("userName")) {
+    initialUserName = (localStorage.getItem("userName") || "").toString();
+    console.log(
+      "Setting initial user name from storage: ".concat(initialUserName)
+    );
+  } else {
+    initialUserName = userNames[Math.floor(Math.random() * userNames.length)];
+    localStorage.setItem("userName", initialUserName);
+    console.log("Setting initial user name: ".concat(initialUserName));
+  }
+
   const [userName, setUserName] = useState<string>(initialUserName);
 
   const saveUserName = (newUserName: string) => {
+    localStorage.setItem("userName", newUserName);
     setUserName(newUserName);
   };
 
