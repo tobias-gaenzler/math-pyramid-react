@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import _ from "underscore";
 import { Model } from "../../common/Model";
 import MathPyramidField, {
-  MathPyramidInputFieldHandler,
+  MathPyramidFieldHandler,
 } from "../MathPyramidField/MathPyramidField";
 import {
   Alert,
@@ -36,12 +36,11 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
     : new Model(size, maxValue, calculator);
   const [solved, setSolved] = useState<boolean>(false);
 
-  const inputHandler: MathPyramidInputFieldHandler = (
+  const inputHandler: MathPyramidFieldHandler = (
     index: number,
-    inputValue: string,
-    model: Model
+    inputValue: string
   ): boolean => {
-    const inputCorrect = model?.solution[index].toString() === inputValue;
+    const inputCorrect = model.solution[index].toString() === inputValue;
     if (inputCorrect) {
       model.userInput[index] = parseInt(inputValue);
       if (_.isEqual(model.solution, model.userInput)) {
@@ -56,6 +55,10 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
     const newModel = new Model(size, maxValue, calculator);
     sendModel(newModel);
   };
+  const closePopup = () => {
+    setSolved(false);
+  };
+
   const rows: React.ReactElement[] = getRows();
 
   return (
@@ -66,14 +69,14 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
       className="math-pyramid"
     >
       {rows}
-      <Dialog open={solved} onClose={restart}>
+      <Dialog open={solved} onClose={closePopup}>
         <DialogContent>
           <Alert variant="filled" severity="success">
             <AlertTitle>Solved!</AlertTitle>
           </Alert>
         </DialogContent>
         <DialogActions>
-          <Button onClick={restart}>Close</Button>
+          <Button onClick={closePopup}>Close</Button>
         </DialogActions>
       </Dialog>
       <Button color="primary" variant="contained" onClick={restart}>
@@ -112,8 +115,7 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
   }
 };
 
-// avoid changing from uncontrolled to controlled fields when
-// starting new game by using random key for fields
+//ensure field updates on restart by using random key for fields
 function createRandomKey(index: number) {
   return "field_"
     .concat(index.toString())

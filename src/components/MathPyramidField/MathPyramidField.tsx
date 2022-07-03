@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MathPyramidField.css";
 import TextField from "@mui/material/TextField";
 import { Model } from "../../common/Model";
 
-export interface MathPyramidInputFieldHandler {
-  (index: number, inputValue: string, model: Model): boolean;
+export interface MathPyramidFieldHandler {
+  (index: number, inputValue: string): boolean;
 }
 
 type Props = {
   index: number;
   model: Model;
-  inputHandler: MathPyramidInputFieldHandler;
+  inputHandler: MathPyramidFieldHandler;
 };
 
 const MathPyramidField: React.FC<Props> = ({
@@ -18,16 +18,33 @@ const MathPyramidField: React.FC<Props> = ({
   model,
   inputHandler,
 }: Props) => {
-  let startValue: string = model.startValues[index]
-    ? model.startValues[index]!.toString()
-    : "";
+  let startValue = "";
+  if (model.userInput[index]) {
+    startValue = model.userInput[index]!.toString();
+  } else if (model.startValues[index]) {
+    startValue = model.startValues[index]!.toString();
+  }
   const [value, setValue] = useState<string>(startValue);
   const [disabled, setDisabled] = useState<boolean>(
     value === "" ? false : true
   );
-  const [className, setClassName] = useState<string>(
-    `pyramid-field ${disabled ? "disabled" : ""}`
-  );
+  const [className, setClassName] = useState<string>("pyramid-field");
+
+  useEffect(() => {
+    const expectsUserInput = !model.startValues[index];
+    if (expectsUserInput) {
+      if (value === "") {
+        setClassName("pyramid-field");
+      } else if (model.solution[index].toString() === value) {
+        setClassName("pyramid-field correct");
+        setDisabled(true);
+      } else {
+        setClassName("pyramid-field incorrect");
+      }
+    } else {
+      setClassName("pyramid-field disabled");
+    }
+  }, [index, model.solution, model.startValues, value]);
 
   return (
     <TextField
@@ -35,25 +52,18 @@ const MathPyramidField: React.FC<Props> = ({
       inputProps={{ type: "number" }}
       onKeyPress={(event) => {
         // allow only numbers
-        if (disabled || !/[0-9]/.test(event.key)) {
+        if (!/[0-9]/.test(event.key)) {
+          console.log("pressed");
           event.preventDefault();
         }
       }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         const currentInputValue = event.target.value;
-        if ("" === currentInputValue) {
-          setClassName("pyramid-field");
-          setValue("");
-          return;
-        }
         setValue(currentInputValue);
-        const inputCorrect = inputHandler(index, currentInputValue, model);
-        if (inputCorrect) {
-          setDisabled(true);
-          setClassName("pyramid-field correct");
-        } else {
-          setClassName("pyramid-field incorrect");
+        const hasInput = "" !== currentInputValue;
+        if (hasInput) {
+          inputHandler(index, currentInputValue);
         }
       }}
       value={value}
