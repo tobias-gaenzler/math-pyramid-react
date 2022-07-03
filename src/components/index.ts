@@ -1,8 +1,14 @@
 import Header from "./Header/Header";
-import MathPyramid from "./MathPyramid/MathPyramid";
+import MathPyramidPractice from "./MathPyramidPractice/MathPyramidPractice";
 import MathPyramidField, {
   MathPyramidInputFieldHandler,
 } from "./MathPyramidField/MathPyramidField";
+import MathPyramidMultiplayer from "./MathPyramidMultiplayer/MathPyramidMultiplayer";
 
-export { MathPyramidField, MathPyramid, Header };
+export {
+  MathPyramidField,
+  MathPyramidPractice,
+  MathPyramidMultiplayer,
+  Header,
+};
 export type { MathPyramidInputFieldHandler };

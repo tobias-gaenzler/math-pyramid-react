@@ -1,10 +1,10 @@
 import React from "react";
-import MathPyramid from "../components/MathPyramid/MathPyramid";
+import MathPyramidPractice from "../components/MathPyramidPractice/MathPyramidPractice";
 
 type Props = {};
 
 const PracticeView: React.FC<Props> = () => {
-  return <MathPyramid size={3} maxValue={100} />;
+  return <MathPyramidPractice size={3} maxValue={100} />;
 };
 
 export default PracticeView;

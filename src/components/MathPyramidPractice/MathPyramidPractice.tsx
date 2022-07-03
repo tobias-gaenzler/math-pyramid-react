@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./MathPyramid.css";
+import "./MathPyramidPractice.css";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import _ from "underscore";
@@ -22,7 +22,7 @@ type Props = {
   maxValue: number;
 };
 
-const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
+const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
   const calculator = new MathPyramidCalculator();
   const [model, setModel] = useState<Model>(
     new Model(size, maxValue, calculator)
@@ -113,4 +113,4 @@ function createRandomKey(index: number) {
     .concat(Math.random().toString());
 }
 
-export default MathPyramid;
+export default MathPyramidPractice;
