@@ -39,7 +39,7 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
   const inputHandler: MathPyramidInputFieldHandler = (
     index: number,
     inputValue: string,
-    model: Model | undefined
+    model: Model
   ): boolean => {
     const inputCorrect = model?.solution[index].toString() === inputValue;
     if (inputCorrect) {

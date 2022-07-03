@@ -34,7 +34,7 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
     inputValue: string,
     model: Model
   ): boolean => {
-    const inputCorrect = model.solution[index].toString() === inputValue;
+    const inputCorrect = model?.solution[index].toString() === inputValue;
     if (inputCorrect) {
       model.userInput[index] = parseInt(inputValue);
       if (_.isEqual(model.solution, model.userInput)) {
@@ -96,8 +96,6 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
           key={createRandomKey(index)}
           index={index}
           inputHandler={inputHandler}
-          model={model}
-          value={model.startValues[index]}
         />
       );
     }

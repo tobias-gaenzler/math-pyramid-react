@@ -1,43 +1,42 @@
-import { Box, Button, Stack } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Model } from "../common/Model";
+import { useModelContext } from "../common/ModelContext";
 import { useUserContext } from "../common/UserContext";
+import MathPyramidMultiplayer from "../components/MathPyramidMultiplayer/MathPyramidMultiplayer";
 import { MathPyramidCalculator } from "../service/MathPyramidCalculator";
 
 type Props = {};
-type Message = {
-  id: string;
-  sender: string;
-  body: string;
-  sentAt: Date;
-};
 enum MessageType {
   TEXT = 0,
   MODEL = 1,
+}
+class Message {
+  sender: string;
+  body: string;
+  type: MessageType;
+  constructor(
+    sender: string,
+    body: string,
+    type: MessageType = MessageType.TEXT
+  ) {
+    this.sender = sender;
+    this.body = body;
+    this.type = type;
+  }
 }
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
   ? process.env.REACT_APP_SERVER_URL
   : "ws://localhost:3333";
 
 const PlayView: React.FC<Props> = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const calculator = new MathPyramidCalculator();
   const { userName } = useUserContext();
+  const { contextModel, saveModel } = useModelContext();
 
   const ws = useRef<WebSocket>();
 
   const sendMessage = (message: string, type?: MessageType) => {
     if (message && ws && ws.current) {
-      if (!type) {
-        type = MessageType.TEXT;
-      }
-      ws.current.send(
-        JSON.stringify({
-          sender: userName,
-          body: message,
-          type: type,
-        })
-      );
+      ws.current.send(JSON.stringify(new Message(userName, message, type)));
     }
   };
   React.useEffect(() => {
@@ -54,8 +53,8 @@ const PlayView: React.FC<Props> = () => {
         const newModel: Model = JSON.parse(data.body);
         console.log("Received new model");
         console.log(newModel);
+        saveModel(newModel);
       }
-      setMessages((_messages) => [..._messages, data]);
     };
 
     return () => {
@@ -66,24 +65,13 @@ const PlayView: React.FC<Props> = () => {
     };
   }, []);
   return (
-    <Stack display="flex" justifyContent="center" alignItems="center">
-      {messages.map((message, index) => (
-        <Box key={index}>{message.body}</Box>
-      ))}
-      <Button onClick={() => sendMessage("Solved by ".concat(userName))}>
-        Send Message
-      </Button>
-      <Button
-        onClick={() =>
-          sendMessage(
-            JSON.stringify(new Model(3, 100, calculator)),
-            MessageType.MODEL
-          )
-        }
-      >
-        Send model
-      </Button>
-    </Stack>
+    <MathPyramidMultiplayer
+      size={3}
+      maxValue={100}
+      sendModel={(model: Model) => {
+        sendMessage(JSON.stringify(model), MessageType.MODEL);
+      }}
+    />
   );
 };
 
