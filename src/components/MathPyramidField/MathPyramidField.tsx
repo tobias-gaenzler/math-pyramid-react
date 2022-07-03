@@ -21,9 +21,9 @@ const MathPyramidField: React.FC<Props> = ({
   let startValue: string = model.startValues[index]
     ? model.startValues[index]!.toString()
     : "";
-  const [fieldValue, setFieldValue] = useState<string>(startValue);
+  const [value, setValue] = useState<string>(startValue);
   const [disabled, setDisabled] = useState<boolean>(
-    fieldValue === "" ? false : true
+    value === "" ? false : true
   );
   const [className, setClassName] = useState<string>(
     `pyramid-field ${disabled ? "disabled" : ""}`
@@ -40,13 +40,14 @@ const MathPyramidField: React.FC<Props> = ({
         }
       }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
         const currentInputValue = event.target.value;
         if ("" === currentInputValue) {
           setClassName("pyramid-field");
-          // setFieldValue("");
+          setValue("");
           return;
         }
-        setFieldValue(currentInputValue);
+        setValue(currentInputValue);
         const inputCorrect = inputHandler(index, currentInputValue, model);
         if (inputCorrect) {
           setDisabled(true);
@@ -55,7 +56,7 @@ const MathPyramidField: React.FC<Props> = ({
           setClassName("pyramid-field incorrect");
         }
       }}
-      value={fieldValue}
+      value={value}
       disabled={disabled}
     />
   );
