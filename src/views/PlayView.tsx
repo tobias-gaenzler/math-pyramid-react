@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Model } from "../common/Model";
 import { useModelContext } from "../common/ModelContext";
 import { useUserContext } from "../common/UserContext";
@@ -38,7 +38,7 @@ const PlayView: React.FC<Props> = () => {
       ws.current.send(JSON.stringify(new Message(userName, message, type)));
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     ws.current = new WebSocket(SERVER_URL);
 
     ws.current.onopen = () => {
