@@ -45,7 +45,6 @@ const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
   };
 
   const restart = () => {
-    setSolved(false);
     setModel(new Model(size, maxValue, calculator));
   };
   const closePopup = () => {

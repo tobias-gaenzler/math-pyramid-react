@@ -58,7 +58,6 @@ const MathPyramidField: React.FC<Props> = ({
         }
       }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
         const currentInputValue = event.target.value;
         setValue(currentInputValue);
         const hasInput = "" !== currentInputValue;

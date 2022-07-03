@@ -51,9 +51,7 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
   };
 
   const restart = () => {
-    setSolved(false);
-    const newModel = new Model(size, maxValue, calculator);
-    sendModel(newModel);
+    sendModel(new Model(size, maxValue, calculator));
   };
   const closePopup = () => {
     setSolved(false);
