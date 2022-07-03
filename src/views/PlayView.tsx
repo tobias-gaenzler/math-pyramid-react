@@ -3,7 +3,6 @@ import { Model } from "../common/Model";
 import { useModelContext } from "../common/ModelContext";
 import { useUserContext } from "../common/UserContext";
 import MathPyramidMultiplayer from "../components/MathPyramidMultiplayer/MathPyramidMultiplayer";
-import { MathPyramidCalculator } from "../service/MathPyramidCalculator";
 
 type Props = {};
 enum MessageType {
@@ -30,7 +29,7 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 const PlayView: React.FC<Props> = () => {
   const { userName } = useUserContext();
-  const { contextModel, saveModel } = useModelContext();
+  const { saveModel } = useModelContext();
 
   const ws = useRef<WebSocket>();
 

@@ -95,6 +95,7 @@ const MathPyramid: React.FC<Props> = ({ size, maxValue }: Props) => {
         <MathPyramidField
           key={createRandomKey(index)}
           index={index}
+          model={model}
           inputHandler={inputHandler}
         />
       );

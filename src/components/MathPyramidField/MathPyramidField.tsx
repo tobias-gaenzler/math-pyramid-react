@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./MathPyramidField.css";
 import TextField from "@mui/material/TextField";
 import { Model } from "../../common/Model";
-import { useModelContext } from "../../common/ModelContext";
 
 export interface MathPyramidInputFieldHandler {
   (index: number, inputValue: string, model: Model): boolean;
@@ -10,15 +9,18 @@ export interface MathPyramidInputFieldHandler {
 
 type Props = {
   index: number;
+  model: Model;
   inputHandler: MathPyramidInputFieldHandler;
 };
 
-const MathPyramidField: React.FC<Props> = ({ index, inputHandler }: Props) => {
-  const { contextModel } = useModelContext();
-  let startValue: string = "";
-  if (contextModel.startValues[index]) {
-    startValue = contextModel.startValues[index]!.toString();
-  }
+const MathPyramidField: React.FC<Props> = ({
+  index,
+  model,
+  inputHandler,
+}: Props) => {
+  let startValue: string = model.startValues[index]
+    ? model.startValues[index]!.toString()
+    : "";
   const [fieldValue, setFieldValue] = useState<string>(startValue);
   const [disabled, setDisabled] = useState<boolean>(
     fieldValue === "" ? false : true
@@ -26,8 +28,6 @@ const MathPyramidField: React.FC<Props> = ({ index, inputHandler }: Props) => {
   const [className, setClassName] = useState<string>(
     `pyramid-field ${disabled ? "disabled" : ""}`
   );
-  console.dir(contextModel);
-  console.log(`Field: ${fieldValue}, ${disabled}, ${className}`);
 
   return (
     <TextField
@@ -47,12 +47,7 @@ const MathPyramidField: React.FC<Props> = ({ index, inputHandler }: Props) => {
           return;
         }
         setFieldValue(currentInputValue);
-        const inputCorrect = inputHandler(
-          index,
-          currentInputValue,
-          contextModel
-        );
-        console.log(`correct: ${inputCorrect}`);
+        const inputCorrect = inputHandler(index, currentInputValue, model);
         if (inputCorrect) {
           setDisabled(true);
           setClassName("pyramid-field correct");

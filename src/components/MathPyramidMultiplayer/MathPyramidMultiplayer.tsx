@@ -103,6 +103,7 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
         <MathPyramidField
           key={createRandomKey(index)}
           index={index}
+          model={model}
           inputHandler={inputHandler}
         />
       );
