@@ -53,7 +53,6 @@ const MathPyramidField: React.FC<Props> = ({
       onKeyPress={(event) => {
         // allow only numbers
         if (!/[0-9]/.test(event.key)) {
-          console.log("pressed");
           event.preventDefault();
         }
       }}
