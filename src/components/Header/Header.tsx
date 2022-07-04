@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Header.css";
 import {
   Box,
@@ -27,14 +27,19 @@ const Header: React.FC<Props> = () => {
   const [userDialogOpen, setUserDialogOpen] = useState<boolean>(false);
   const userNameField = useRef<HTMLInputElement>();
   const setUser = () => {
-    if (
-      userNameField?.current?.value &&
-      !/^\s*$/.test(userNameField?.current?.value) // not blank
-    ) {
-      saveUserName(userNameField.current.value);
+    const currentValue = userNameField?.current?.value;
+    // not blank
+    if (currentValue && !/^\s*$/.test(currentValue)) {
+      saveUserName(currentValue);
     }
     setUserDialogOpen(false);
   };
+  useEffect(() => {
+    window.setTimeout(function () {
+      userNameField?.current?.focus();
+    }, 200);
+  });
+
   return (
     <Box className="header" sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -76,7 +81,7 @@ const Header: React.FC<Props> = () => {
               size="large"
               color="inherit"
             >
-              {/* <Avatar>{Array.from(userName)[0]}</Avatar> */}
+              {/* {<Avatar>{Array.from(userName)[0]}</Avatar>} */}
               <AccountCircle />
               <Typography variant="h6" component="div">
                 {userName}
@@ -106,7 +111,11 @@ const Header: React.FC<Props> = () => {
             }}
             id="userName"
             label="User name"
-            autoFocus={true}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                setUser();
+              }
+            }}
           />
         </DialogContent>
         <DialogActions>
