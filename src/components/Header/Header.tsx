@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import {
   Box,
@@ -7,12 +7,7 @@ import {
   CssBaseline,
   Typography,
   IconButton,
-  Dialog,
-  DialogActions,
-  DialogContent,
   Tooltip,
-  TextField,
-  InputAdornment,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
@@ -20,25 +15,12 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { AccountCircle } from "@mui/icons-material";
 import { useUserContext } from "../../common/UserContext";
+import { UserNameDialog } from "../UserNameDialog/UserNameDialog";
 
 type Props = {};
 const Header: React.FC<Props> = () => {
-  const { userName, saveUserName } = useUserContext();
-  const [userDialogOpen, setUserDialogOpen] = useState<boolean>(false);
-  const userNameField = useRef<HTMLInputElement>();
-  const setUser = () => {
-    const currentValue = userNameField?.current?.value;
-    // not blank
-    if (currentValue && !/^\s*$/.test(currentValue)) {
-      saveUserName(currentValue);
-    }
-    setUserDialogOpen(false);
-  };
-  useEffect(() => {
-    window.setTimeout(function () {
-      userNameField?.current?.focus();
-    }, 200);
-  });
+  const { userName } = useUserContext();
+  const [userNameDialogOpen, setUserNameDialogOpen] = useState<boolean>(false);
 
   return (
     <Box className="header" sx={{ flexGrow: 1 }}>
@@ -76,7 +58,7 @@ const Header: React.FC<Props> = () => {
           <Tooltip title={userName}>
             <IconButton
               onClick={() => {
-                setUserDialogOpen(true);
+                setUserNameDialogOpen(true);
               }}
               size="large"
               color="inherit"
@@ -98,30 +80,10 @@ const Header: React.FC<Props> = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Dialog open={userDialogOpen} onClose={setUser}>
-        <DialogContent>
-          <TextField
-            inputRef={userNameField}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-            id="userName"
-            label="User name"
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                setUser();
-              }
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={setUser}>Save</Button>
-        </DialogActions>
-      </Dialog>
+      <UserNameDialog
+        open={userNameDialogOpen}
+        setOpen={setUserNameDialogOpen}
+      />
     </Box>
   );
 };
