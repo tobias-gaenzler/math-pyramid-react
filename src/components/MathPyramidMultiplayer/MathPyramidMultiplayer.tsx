@@ -3,10 +3,6 @@ import "./MathPyramidMultiplayer.css";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import _ from "underscore";
-import { Model } from "../../common/Model";
-import MathPyramidField, {
-  MathPyramidFieldHandler,
-} from "../MathPyramidField/MathPyramidField";
 import {
   Alert,
   AlertTitle,
@@ -16,7 +12,10 @@ import {
   DialogContent,
 } from "@mui/material";
 import { MathPyramidCalculator } from "../../service/MathPyramidCalculator";
-import { useModelContext } from "../../common/ModelContext";
+import { Model, useModelContext } from "../../common";
+import MathPyramidField, {
+  MathPyramidFieldHandler,
+} from "../MathPyramidField/MathPyramidField";
 
 type Props = {
   size: number;

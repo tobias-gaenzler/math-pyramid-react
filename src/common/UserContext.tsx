@@ -15,20 +15,7 @@ const UserContext = createContext<UserContextProps>({
 const useUserContext = () => useContext(UserContext);
 
 function UserContextProvider(props: ChildrenProps) {
-  let initialUserName: string;
-
-  if (localStorage.getItem("userName")) {
-    initialUserName = (localStorage.getItem("userName") || "").toString();
-    console.log(
-      "Setting initial user name from storage: ".concat(initialUserName)
-    );
-  } else {
-    initialUserName = userNames[Math.floor(Math.random() * userNames.length)];
-    localStorage.setItem("userName", initialUserName);
-    console.log("Setting initial user name: ".concat(initialUserName));
-  }
-
-  const [userName, setUserName] = useState<string>(initialUserName);
+  const [userName, setUserName] = useState<string>(getInitialUserName());
 
   const saveUserName = (newUserName: string) => {
     console.log("Saving new user name: ".concat(userName));
@@ -41,6 +28,20 @@ function UserContextProvider(props: ChildrenProps) {
       {props.children}
     </UserContext.Provider>
   );
+
+  function getInitialUserName() {
+    let initialUserName: string;
+
+    if (localStorage.getItem("userName")) {
+      initialUserName = (localStorage.getItem("userName") || "").toString();
+      console.log(`Setting user name from storage: ${initialUserName}`);
+    } else {
+      initialUserName = userNames[Math.floor(Math.random() * userNames.length)];
+      localStorage.setItem("userName", initialUserName);
+      console.log("Setting initial user name: ".concat(initialUserName));
+    }
+    return initialUserName;
+  }
 }
 
 export { useUserContext, UserContextProvider };

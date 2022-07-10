@@ -1,5 +1,5 @@
 import React from "react";
-import MathPyramidPractice from "../components/MathPyramidPractice/MathPyramidPractice";
+import { MathPyramidPractice } from "../components";
 
 type Props = {};
 

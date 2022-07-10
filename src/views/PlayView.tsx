@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { Model } from "../common/Model";
-import { useModelContext } from "../common/ModelContext";
-import { useUserContext } from "../common/UserContext";
-import MathPyramidMultiplayer from "../components/MathPyramidMultiplayer/MathPyramidMultiplayer";
+import { Model, useModelContext, useUserContext } from "../common";
+import { MathPyramidMultiplayer } from "../components";
 
 type Props = {};
 enum MessageType {

@@ -1,9 +1,8 @@
 import "./App.css";
-import Header from "./components/Header/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelpView, PracticeView, PlayView, NotFoundView } from "./views";
-import { UserContextProvider } from "./common/UserContext";
-import { ModelContextProvider } from "./common/ModelContext";
+import { ModelContextProvider, UserContextProvider } from "./common";
+import { Header } from "./components";
 
 function App() {
   return (
