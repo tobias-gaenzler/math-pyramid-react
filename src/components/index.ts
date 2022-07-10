@@ -4,8 +4,8 @@ import MathPyramidField, {
   MathPyramidFieldHandler,
 } from "./MathPyramidField/MathPyramidField";
 import MathPyramidMultiplayer from "./MathPyramidMultiplayer/MathPyramidMultiplayer";
-import { UserNameButton } from "./UserNameButton/UserNameButton";
 import { MenuEntry } from "./MenuEntry/MenuEntry";
+import { UserNameButton } from "./UserNameButton/UserNameButton";
 
 export {
   MathPyramidField,
