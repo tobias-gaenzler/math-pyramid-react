@@ -9,13 +9,12 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { AccountCircle } from "@mui/icons-material";
-import { useUserContext } from "../../common/UserContext";
-import { UserNameDialog } from "../UserNameDialog/UserNameDialog";
+import { useUserContext } from "../../common";
+import { MenuEntry, UserNameDialog } from "../../components";
 
 type Props = {};
 const Header: React.FC<Props> = () => {
@@ -38,22 +37,8 @@ const Header: React.FC<Props> = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Button
-              sx={{ mr: 2 }}
-              color="inherit"
-              component={RouterLink}
-              to="/play"
-            >
-              Play
-            </Button>
-            <Button
-              sx={{ mr: 2 }}
-              color="inherit"
-              component={RouterLink}
-              to="/practice"
-            >
-              Practice
-            </Button>
+            <MenuEntry route="/play" title="Play" />
+            <MenuEntry route="/practice" title="Practice" />
           </Typography>
           <Tooltip title={userName}>
             <IconButton
