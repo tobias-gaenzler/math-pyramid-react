@@ -4,7 +4,7 @@ import MathPyramidField, {
   MathPyramidFieldHandler,
 } from "./MathPyramidField/MathPyramidField";
 import MathPyramidMultiplayer from "./MathPyramidMultiplayer/MathPyramidMultiplayer";
-import { UserNameDialog } from "./UserNameDialog/UserNameDialog";
+import { UserNameButton } from "./UserNameButton/UserNameButton";
 import { MenuEntry } from "./MenuEntry/MenuEntry";
 
 export {
@@ -12,7 +12,7 @@ export {
   MathPyramidPractice,
   MathPyramidMultiplayer,
   Header,
-  UserNameDialog,
+  UserNameButton,
   MenuEntry,
 };
 export type { MathPyramidFieldHandler as MathPyramidInputFieldHandler };
