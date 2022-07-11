@@ -34,45 +34,43 @@ const UserNameButton: React.FC<Props> = () => {
     }, 200);
   });
   return (
-    <Tooltip title={userName}>
-      <IconButton
-        onClick={() => {
-          setDialogOpen(true);
-        }}
-        size="large"
-        color="inherit"
-      >
-        {/* {<Avatar>{Array.from(userName)[0]}</Avatar>} */}
-        <AccountCircle />
-        <Typography variant="h6" component="div">
-          {userName}
-        </Typography>
-        <Dialog open={dialogOpen} onClose={setUser}>
-          <DialogContent>
-            <TextField
-              inputRef={userNameField}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              id="userName"
-              label="User name"
-              onKeyPress={(event) => {
-                if (event.key === "Enter") {
-                  setUser();
-                }
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={setUser}>Save</Button>
-          </DialogActions>
-        </Dialog>
-      </IconButton>
-    </Tooltip>
+    <IconButton
+      onClick={() => {
+        setDialogOpen(true);
+      }}
+      size="large"
+      color="inherit"
+    >
+      {/* {<Avatar>{Array.from(userName)[0]}</Avatar>} */}
+      <AccountCircle />
+      <Typography variant="h6" component="div">
+        {userName}
+      </Typography>
+      <Dialog open={dialogOpen} onClose={setUser}>
+        <DialogContent>
+          <TextField
+            inputRef={userNameField}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            id="userName"
+            label="User name"
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                setUser();
+              }
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={setUser}>Save</Button>
+        </DialogActions>
+      </Dialog>
+    </IconButton>
   );
 };
 export { UserNameButton };
