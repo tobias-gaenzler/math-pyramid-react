@@ -32,28 +32,37 @@ function WebsocketContextProvider(props: ChildrenProps) {
       console.log("Sent message");
     }
   };
+
   useEffect(() => {
-    ws.current = new WebSocket(SERVER_URL);
+    if (ws && ws.current && wsIsOpenOrConnecting()) {
+      console.log("connect: ws already open or connecting");
+    } else {
+      ws.current = new WebSocket(SERVER_URL);
 
-    ws.current.onopen = () => {
-      console.log("Connection opened");
-    };
+      if (ws && ws.current) {
+        ws.current.onopen = () => {
+          console.log("Connection opened");
+        };
 
-    ws.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.dir(data);
-      if (data.type === MessageType.MODEL) {
-        const newModel: Model = JSON.parse(data.body);
-        console.log("Received new model");
-        console.log(newModel);
-        saveModel(newModel);
+        ws.current.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          console.dir(data);
+          if (data.type === MessageType.MODEL) {
+            const newModel: Model = JSON.parse(data.body);
+            console.log("Received new model");
+            console.log(newModel);
+            saveModel(newModel);
+          }
+        };
       }
-    };
+    }
 
     return () => {
-      console.log("Cleaning up...");
-      if (ws && ws.current) {
+      if (ws && ws.current && !wsIsOpenOrConnecting()) {
+        console.log("cleanup: close open or connecting websockets");
         ws.current.close();
+      } else {
+        console.log("cleanup: ws already closed or closing");
       }
     };
   }, [saveModel]);
@@ -63,6 +72,14 @@ function WebsocketContextProvider(props: ChildrenProps) {
       {props.children}
     </WebsocketContext.Provider>
   );
+
+  function wsIsOpenOrConnecting(): boolean {
+    if (ws && ws.current) {
+      return ws.current.readyState === 1 || ws.current.readyState === 0;
+    } else {
+      return false;
+    }
+  }
 }
 
 export { useWebsocketContext, WebsocketContextProvider };
