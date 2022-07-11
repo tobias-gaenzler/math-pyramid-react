@@ -34,16 +34,10 @@ function WebsocketContextProvider(props: ChildrenProps) {
   };
 
   useEffect(() => {
-    function wsIsOpen(): boolean {
-      return ws?.current?.readyState === 1;
-    }
-    function wsIsConnecting(): boolean {
-      return ws?.current?.readyState === 0;
-    }
-
     if (ws && ws.current && (wsIsOpen() || wsIsConnecting())) {
       console.log("connect: ws already open or connecting");
     } else {
+      console.log("connect: creating ws connection");
       ws.current = new WebSocket(SERVER_URL);
 
       ws.current.onopen = () => {
@@ -64,6 +58,12 @@ function WebsocketContextProvider(props: ChildrenProps) {
       };
     }
 
+    function wsIsOpen(): boolean {
+      return ws?.current?.readyState === 1;
+    }
+    function wsIsConnecting(): boolean {
+      return ws?.current?.readyState === 0;
+    }
     return () => {
       if (ws && ws.current && wsIsOpen()) {
         console.log("cleanup: close open websockets");
