@@ -56,7 +56,7 @@ function WebsocketContextProvider(props: ChildrenProps) {
         ws.current.close();
       }
     };
-  }, []);
+  }, [saveModel]);
 
   return (
     <WebsocketContext.Provider value={{ sendMessage }}>
