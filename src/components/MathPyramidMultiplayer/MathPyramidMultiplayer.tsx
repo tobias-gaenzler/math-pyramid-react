@@ -12,7 +12,12 @@ import {
   DialogContent,
 } from "@mui/material";
 import { MathPyramidCalculator } from "../../service/MathPyramidCalculator";
-import { Model, useModelContext } from "../../common";
+import {
+  MessageType,
+  Model,
+  useModelContext,
+  useWebsocketContext,
+} from "../../common";
 import MathPyramidField, {
   MathPyramidFieldHandler,
 } from "../MathPyramidField/MathPyramidField";
@@ -20,16 +25,13 @@ import MathPyramidField, {
 type Props = {
   size: number;
   maxValue: number;
-  sendModel: (model: Model) => void;
 };
 
-const MathPyramidMultiplayer: React.FC<Props> = ({
-  size,
-  maxValue,
-  sendModel,
-}: Props) => {
+const MathPyramidMultiplayer: React.FC<Props> = ({ size, maxValue }: Props) => {
   const calculator = new MathPyramidCalculator();
   const { contextModel } = useModelContext();
+  const { sendMessage } = useWebsocketContext();
+
   const model = contextModel
     ? contextModel
     : new Model(size, maxValue, calculator);
@@ -50,7 +52,10 @@ const MathPyramidMultiplayer: React.FC<Props> = ({
   };
 
   const restart = () => {
-    sendModel(new Model(size, maxValue, calculator));
+    sendMessage(
+      JSON.stringify(new Model(size, maxValue, calculator)),
+      MessageType.MODEL
+    );
   };
   const closePopup = () => {
     setSolved(false);

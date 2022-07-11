@@ -30,17 +30,19 @@ function UserContextProvider(props: ChildrenProps) {
   );
 
   function getInitialUserName() {
-    let initialUserName: string;
-
     if (localStorage.getItem("userName")) {
-      initialUserName = (localStorage.getItem("userName") || "").toString();
-      console.log(`Setting user name from storage: ${initialUserName}`);
+      const userNameFromStorage = (
+        localStorage.getItem("userName") || ""
+      ).toString();
+      console.log(`Setting user name from storage: ${userNameFromStorage}`);
+      return userNameFromStorage;
     } else {
-      initialUserName = userNames[Math.floor(Math.random() * userNames.length)];
-      localStorage.setItem("userName", initialUserName);
-      console.log("Setting initial user name: ".concat(initialUserName));
+      const randomUserName =
+        userNames[Math.floor(Math.random() * userNames.length)];
+      console.log("Setting initial user name: ".concat(randomUserName));
+      localStorage.setItem("userName", randomUserName);
+      return randomUserName;
     }
-    return initialUserName;
   }
 }
 
