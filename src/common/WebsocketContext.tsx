@@ -27,7 +27,9 @@ function WebsocketContextProvider(props: ChildrenProps) {
 
   const sendMessage = (message: string, type?: MessageType) => {
     if (message && ws && ws.current) {
+      console.log("Sending message");
       ws.current.send(JSON.stringify(new Message(userName, message, type)));
+      console.log("Sent message");
     }
   };
   useEffect(() => {
