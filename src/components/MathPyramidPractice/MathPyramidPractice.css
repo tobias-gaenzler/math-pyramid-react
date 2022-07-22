@@ -9,3 +9,7 @@
 .math-pyramid input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.row {
+  display: inline-flex;
+}
