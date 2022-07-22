@@ -1,3 +1,4 @@
+import { ChildrenProps } from "./ChildrenProps";
 import { Message, MessageType } from "./Message";
 import { Model } from "./Model";
 import {
@@ -27,4 +28,4 @@ export {
   useWebsocketContext,
   WebsocketContextProvider,
 };
-export type { ModelContextProps, UserContextProps, WebsocketContextProps };
+export type { ModelContextProps, UserContextProps, WebsocketContextProps, ChildrenProps };

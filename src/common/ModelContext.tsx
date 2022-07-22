@@ -1,14 +1,13 @@
 import { createContext, useContext, useState } from "react";
 import { MathPyramidCalculator } from "../service/MathPyramidCalculator";
+import { ChildrenProps } from "./ChildrenProps";
 import { Model } from "./Model";
 
 type ModelContextProps = {
   contextModel: Model;
   saveModel: (newModel: Model) => void;
 };
-type ChildrenProps = {
-  children: React.ReactNode;
-};
+
 const ModelContext = createContext<ModelContextProps>({
   contextModel: new Model(3, 100, new MathPyramidCalculator()),
   saveModel: () => {},

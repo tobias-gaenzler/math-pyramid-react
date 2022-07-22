@@ -18,8 +18,9 @@ const UserNameButton: React.FC<Props> = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const userNameField = useRef<HTMLInputElement>();
-  const setUser = () => {
-    const currentValue = userNameField?.current?.value;
+  const closeDialog = () => { setDialogOpen(false) }
+  const handleUserNameInput = () => {
+    const currentValue = userNameField?.current?.value
     // not blank
     if (currentValue && !/^\s*$/.test(currentValue)) {
       saveUserName(currentValue);
@@ -33,19 +34,21 @@ const UserNameButton: React.FC<Props> = () => {
     }, 200);
   });
   return (
-    <IconButton
-      onClick={() => {
-        setDialogOpen(true);
-      }}
-      size="large"
-      color="inherit"
-    >
-      {/* {<Avatar>{Array.from(userName)[0]}</Avatar>} */}
-      <AccountCircle />
-      <Typography variant="h6" component="div">
-        {userName}
-      </Typography>
-      <Dialog open={dialogOpen} onClose={setUser}>
+    <>
+      <IconButton
+        onClick={() => {
+          setDialogOpen(true);
+        }}
+        size="large"
+        color="inherit"
+      >
+        {/* {<Avatar>{Array.from(userName)[0]}</Avatar>} */}
+        <AccountCircle />
+        <Typography variant="h6" component="div">
+          {userName}
+        </Typography>
+      </IconButton>
+      <Dialog open={dialogOpen} onClose={closeDialog}>
         <DialogContent>
           <TextField
             inputRef={userNameField}
@@ -60,16 +63,16 @@ const UserNameButton: React.FC<Props> = () => {
             label="User name"
             onKeyPress={(event) => {
               if (event.key === "Enter") {
-                setUser();
+                handleUserNameInput();
               }
             }}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={setUser}>Save</Button>
+          <Button onClick={handleUserNameInput}>Save</Button>
         </DialogActions>
       </Dialog>
-    </IconButton>
+    </>
   );
 };
 export { UserNameButton };

@@ -1,24 +1,26 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { ChildrenProps } from "./ChildrenProps";
 import userNames from "./userNames.json";
 
 type UserContextProps = {
   userName: string;
   saveUserName: (newUserName: string) => void;
 };
-type ChildrenProps = {
-  children: React.ReactNode;
-};
 const UserContext = createContext<UserContextProps>({
   userName: "",
-  saveUserName: () => {},
+  saveUserName: () => { },
 });
 const useUserContext = () => useContext(UserContext);
 
 function UserContextProvider(props: ChildrenProps) {
-  const [userName, setUserName] = useState<string>(getInitialUserName());
+  useEffect(() => {
+    const initialUserName = getInitialUserName()
+    setUserName(initialUserName)
+  }, []);
+  const [userName, setUserName] = useState<string>("");
 
   const saveUserName = (newUserName: string) => {
-    console.log("Saving new user name: ".concat(userName));
+    console.log("Saving new user name: ".concat(newUserName));
     localStorage.setItem("userName", newUserName);
     setUserName(newUserName);
   };
@@ -30,10 +32,8 @@ function UserContextProvider(props: ChildrenProps) {
   );
 
   function getInitialUserName() {
-    if (localStorage.getItem("userName")) {
-      const userNameFromStorage = (
-        localStorage.getItem("userName") || ""
-      ).toString();
+    const userNameFromStorage = localStorage.getItem("userName");
+    if (userNameFromStorage) {
       console.log(`Setting user name from storage: ${userNameFromStorage}`);
       return userNameFromStorage;
     } else {

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useRef } from "react";
+import { ChildrenProps } from "./ChildrenProps";
 import { Message, MessageType } from "./Message";
 import { Model } from "./Model";
 import { useModelContext } from "./ModelContext";
@@ -10,9 +11,6 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 type WebsocketContextProps = {
   sendMessage: (message: string, type: MessageType) => void;
-};
-type ChildrenProps = {
-  children: React.ReactNode;
 };
 const WebsocketContext = createContext<WebsocketContextProps>({
   sendMessage: () => {},
