@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelpView, PracticeView, PlayView, NotFoundView } from "./views";
 import { ModelContextProvider, UserContextProvider } from "./common";
