@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import "./MathPyramidField.css"
 import TextField from "@mui/material/TextField"
 import { Model } from "../../common"
@@ -18,7 +18,6 @@ const MathPyramidField: React.FC<Props> = ({
   model,
   inputHandler,
 }: Props) => {
-
   const getStartValue = useCallback(() => {
     if (model.startValues[index]) {
       return model.startValues[index]!.toString()
@@ -27,31 +26,36 @@ const MathPyramidField: React.FC<Props> = ({
     }
   }, [model, index]);
 
-  const [value, setValue] = useState<string>(getStartValue())
+  const [value, setValue] = useState<string>(() => { return getStartValue() })
   const [disabled, setDisabled] = useState<boolean>(
     value === "" ? false : true
   )
   const [className, setClassName] = useState<string>("pyramid-field")
 
-  // initialize field when model changes
+  // set field color when input changes
   useEffect(() => {
+    const expectsUserInput = (getStartValue() === "");
+    if (expectsUserInput) {
+      if (value === "") {
+        setClassName("pyramid-field");
+      } else if (model.solution[index].toString() === value) {
+        setClassName("pyramid-field correct");
+        setDisabled(true);
+      } else {
+        setClassName("pyramid-field incorrect");
+      }
+    } else {
+      setClassName("pyramid-field disabled");
+    }
+  }, [model, index, getStartValue, value])
+
+  // initialize field when model changes 
+  // useLayoutEffect instead of useEffect, to prevent that field is red (caused by old value)
+  useLayoutEffect (() => {
     let startValue = getStartValue()
     setValue(startValue)
     setDisabled(startValue === "" ? false : true)
-
   }, [model, index, getStartValue])
-
-  // set field color when input changes
-  useEffect(() => {
-    if (value === "") {
-      setClassName("pyramid-field")
-    } else if (model.solution[index].toString() === value) {
-      setClassName("pyramid-field correct")
-      setDisabled(true)
-    } else {
-      setClassName("pyramid-field incorrect")
-    }
-  }, [model, index, value])
 
   return (
     <TextField
