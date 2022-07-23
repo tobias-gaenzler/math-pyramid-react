@@ -1,56 +1,51 @@
-import React, { useState } from "react";
-import "./MathPyramidPractice.css";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import _ from "underscore";
+import React, { useState } from "react"
+import "./MathPyramidPractice.css"
+import Box from "@mui/material/Box"
+import Stack from "@mui/material/Stack"
+import _ from "underscore"
 import MathPyramidField, {
   MathPyramidFieldHandler,
-} from "../MathPyramidField/MathPyramidField";
+} from "../MathPyramidField/MathPyramidField"
 import {
-  Alert,
-  AlertTitle,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-} from "@mui/material";
-import { MathPyramidCalculator } from "../../service/MathPyramidCalculator";
-import { Model } from "../../common";
+} from "@mui/material"
+import { MathPyramidCalculator } from "../../service/MathPyramidCalculator"
+import { Model } from "../../common"
+import { SuccessDialog } from ".."
 
 type Props = {
-  size: number;
-  maxValue: number;
-};
+  size: number
+  maxValue: number
+}
 
 const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
-  const calculator = new MathPyramidCalculator();
+  const calculator = new MathPyramidCalculator()
   const [model, setModel] = useState<Model>(() => {
     // lazy state init
-    return new Model(size, maxValue, calculator);
-  });
-  const [solved, setSolved] = useState<boolean>(false);
+    return new Model(size, maxValue, calculator)
+  })
+  const [solved, setSolved] = useState<boolean>(false)
 
   const inputHandler: MathPyramidFieldHandler = (
     index: number,
     inputValue: string
   ): boolean => {
-    const inputCorrect = model.solution[index].toString() === inputValue;
+    const inputCorrect = model.solution[index].toString() === inputValue
     if (inputCorrect) {
-      model.userInput[index] = parseInt(inputValue);
+      model.userInput[index] = parseInt(inputValue)
       if (_.isEqual(model.solution, model.userInput)) {
-        setSolved(true);
+        setSolved(true)
       }
     }
-    return inputCorrect;
-  };
+    return inputCorrect
+  }
 
   const restart = () => {
-    setModel(new Model(size, maxValue, calculator));
-  };
+    setModel(new Model(size, maxValue, calculator))
+  }
   const closePopup = () => {
-    setSolved(false);
-  };
-  const rows: React.ReactElement[] = getRows();
+    setSolved(false)
+  }
 
   return (
     <Stack
@@ -59,40 +54,31 @@ const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
       alignItems="center"
       className="math-pyramid"
     >
-      {rows}
-      <Dialog open={solved} onClose={closePopup}>
-        <DialogContent>
-          <Alert variant="filled" severity="success">
-            <AlertTitle>Solved!</AlertTitle>
-          </Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closePopup}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      {getRows()}
+      <SuccessDialog open={solved} onClose={closePopup} />
       <Button color="primary" variant="contained" onClick={restart}>
         Restart
       </Button>
     </Stack>
-  );
+  )
 
   function getRows() {
-    const rows: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = []
     for (let row = model.size - 1; row >= 0; row--) {
-      const fields: React.ReactElement[] = getFieldsForRow(row);
+      const fields: React.ReactElement[] = getFieldsForRow(row)
       rows.push(
         <Box key={row} className="row">
           {fields}
         </Box>
-      );
+      )
     }
-    return rows;
+    return rows
   }
 
   function getFieldsForRow(row: number) {
-    const fields: React.ReactElement[] = [];
+    const fields: React.ReactElement[] = []
     for (let column = 0; column < model.size - row; column++) {
-      const index = calculator.getIndex(row, column, model.size);
+      const index = calculator.getIndex(row, column, model.size)
       fields.push(
         <MathPyramidField
           key={index}
@@ -100,10 +86,10 @@ const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
           model={model}
           inputHandler={inputHandler}
         />
-      );
+      )
     }
-    return fields;
+    return fields
   }
-};
+}
 
-export default MathPyramidPractice;
+export default MathPyramidPractice

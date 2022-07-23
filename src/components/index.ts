@@ -1,11 +1,12 @@
-import Header from "./Header/Header";
-import MathPyramidPractice from "./MathPyramidPractice/MathPyramidPractice";
+import Header from "./Header/Header"
+import MathPyramidPractice from "./MathPyramidPractice/MathPyramidPractice"
 import MathPyramidField, {
   MathPyramidFieldHandler,
-} from "./MathPyramidField/MathPyramidField";
-import MathPyramidMultiplayer from "./MathPyramidMultiplayer/MathPyramidMultiplayer";
-import { MenuEntry } from "./MenuEntry/MenuEntry";
-import { UserNameButton } from "./UserNameButton/UserNameButton";
+} from "./MathPyramidField/MathPyramidField"
+import MathPyramidMultiplayer from "./MathPyramidMultiplayer/MathPyramidMultiplayer"
+import { MenuEntry } from "./MenuEntry/MenuEntry"
+import { UserNameButton } from "./UserNameButton/UserNameButton"
+import { SuccessDialog } from "./MenuEntry/SuccessDialog"
 
 export {
   MathPyramidField,
@@ -14,5 +15,6 @@ export {
   Header,
   UserNameButton,
   MenuEntry,
-};
-export type { MathPyramidFieldHandler as MathPyramidInputFieldHandler };
+  SuccessDialog
+}
+export type { MathPyramidFieldHandler as MathPyramidInputFieldHandler }
