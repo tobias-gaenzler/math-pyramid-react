@@ -95,7 +95,7 @@ const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
       const index = calculator.getIndex(row, column, model.size);
       fields.push(
         <MathPyramidField
-          key={createRandomKey(index)}
+          key={index}
           index={index}
           model={model}
           inputHandler={inputHandler}
@@ -105,13 +105,5 @@ const MathPyramidPractice: React.FC<Props> = ({ size, maxValue }: Props) => {
     return fields;
   }
 };
-
-//ensure field updates on restart by using random key for fields
-function createRandomKey(index: number) {
-  return "field_"
-    .concat(index.toString())
-    .concat("_")
-    .concat(Math.random().toString());
-}
 
 export default MathPyramidPractice;
