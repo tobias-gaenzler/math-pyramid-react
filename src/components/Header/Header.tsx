@@ -11,7 +11,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
-import { MenuEntry, UserNameButton } from "../../components";
+import { MenuEntry } from "../../components";
 
 type Props = {};
 const Header: React.FC<Props> = () => {
@@ -32,9 +32,7 @@ const Header: React.FC<Props> = () => {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <MenuEntry route="/play" title="Play" />
-            <MenuEntry route="/practice" title="Practice" />
           </Typography>
-          <UserNameButton />
           <IconButton
             component={RouterLink}
             to="/"
