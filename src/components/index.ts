@@ -4,7 +4,7 @@ import MathPyramidField, {
   MathPyramidFieldHandler,
 } from "./MathPyramidField/MathPyramidField"
 import { MenuEntry } from "./MenuEntry/MenuEntry"
-import { SuccessDialog } from "./MenuEntry/SuccessDialog"
+import { SuccessDialog } from "./SuccessDialog/SuccessDialog"
 
 export {
   MathPyramidField,
