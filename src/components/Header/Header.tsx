@@ -35,7 +35,7 @@ const Header: React.FC<Props> = () => {
           </Typography>
           <IconButton
             component={RouterLink}
-            to="/"
+            to="/help"
             size="large"
             color="inherit"
           >

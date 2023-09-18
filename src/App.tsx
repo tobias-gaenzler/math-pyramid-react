@@ -8,7 +8,7 @@ function App() {
   return (
     <StrictMode>
         <ModelContextProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/math-pyramid-react">
             <Header />
             <AppRoutes />
           </BrowserRouter>
@@ -20,7 +20,8 @@ function App() {
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<HelpView />} />
+      <Route path="/" element={<PlayView />} />
+      <Route path="/help" element={<HelpView />} />
       <Route path="/play" element={<PlayView />} />
       <Route path="*" element={<NotFoundView />} />
     </Routes>
