@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/math-pyramid-react/static/css/main.94635b6a.css",
+    "main.js": "/math-pyramid-react/static/js/main.df8bc4af.js",
+    "index.html": "/math-pyramid-react/index.html",
+    "main.94635b6a.css.map": "/math-pyramid-react/static/css/main.94635b6a.css.map",
+    "main.df8bc4af.js.map": "/math-pyramid-react/static/js/main.df8bc4af.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94635b6a.css",
+    "static/js/main.df8bc4af.js"
+  ]
+}
