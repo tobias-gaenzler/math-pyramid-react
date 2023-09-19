@@ -32,4 +32,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - `npm deploy`
   
-  Builds the app, commits the created artifacts to the 'gh-pages' branch from where it is deployed to github pages automatically by github (github pages configuration)
+  Builds the app, commits the created artifacts to the 'gh-pages' branch from where it is deployed to github pages automatically by github (github pages configuration).
+  
